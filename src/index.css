@@ -1,0 +1,17 @@
+:root {
+  --font-mono: 'Courier New', Courier, monospace;
+  --color-background-primary: #0f172a;   
+  --color-background-secondary: #1e293b; 
+  --color-background-tertiary: #334155;  
+  --color-text-primary: #f8fafc;        
+  --color-text-secondary: #cbd5e1;      
+  --color-text-tertiary: #94a3b8;       
+  --color-border-primary: #475569;      
+  --color-border-secondary: #334155;    
+  --color-border-tertiary: #1e293b;     
+}
+body {
+  margin: 0;
+  background-color: var(--color-background-primary);
+  color: var(--color-text-primary);
+}
