@@ -13,31 +13,31 @@ const TC={
   DRILL:  {c:"#dc2626",bg:"#fef2f2",lbl:"Gun Drill"},
 };
 
-const ZONES=[
-  {id:"conv",  lbl:"Conventional Machining", x:5,  y:16, w:140,h:110,c:"#16a34a"},
-];
+
+
+const AW=12, AH=10; // uniform avatar size in SVG units
 
 const INIT_MACHINES=[
-  {id:"NO501",type:"5AX", mfr:"DMG-Mori",  model:"DMU 60 eVo Linear", x:58, y:19,w:9, h:9, cycleMin:45,setupMin:15,operators:1,uptime:90},
-  {id:"NO502",type:"5AX", mfr:"DMG-Mori",  model:"DMU 60 eVo Linear", x:70, y:19,w:9, h:9, cycleMin:45,setupMin:15,operators:1,uptime:90},
-  {id:"CP640",type:"MTURN",mfr:"Mori Seiki",model:"NT 4250 DCG",       x:9,  y:44,w:13,h:10,cycleMin:40,setupMin:20,operators:1,uptime:88},
-  {id:"CP642",type:"MTURN",mfr:"Mori Seiki",model:"NT 4250 DCG",       x:25, y:44,w:13,h:10,cycleMin:40,setupMin:20,operators:1,uptime:88},
-  {id:"CP644",type:"MTURN",mfr:"DMG Mori",  model:"NTX 3000",          x:41, y:44,w:13,h:10,cycleMin:38,setupMin:18,operators:1,uptime:87},
-  {id:"NO119",type:"HMILL",mfr:"Mori Seiki",model:"SH-400",            x:88, y:19,w:11,h:8, cycleMin:25,setupMin:10,operators:1,uptime:92},
-  {id:"NO120",type:"HMILL",mfr:"Doosan",    model:"NHP 6300",          x:102,y:19,w:11,h:8, cycleMin:25,setupMin:10,operators:1,uptime:90},
-  {id:"NO121",type:"HMILL",mfr:"DMG Mori",  model:"NHX 4000",          x:116,y:19,w:11,h:8, cycleMin:28,setupMin:12,operators:1,uptime:89},
-  {id:"CP641",type:"LATHE",mfr:"Doosan",    model:"Puma TT1800SV",     x:10, y:60,w:9, h:6, cycleMin:15,setupMin:8, operators:1,uptime:91,barFeed:true},
-  {id:"CP643",type:"LATHE",mfr:"Doosan",    model:"Puma TT1800SY",     x:22, y:60,w:9, h:6, cycleMin:15,setupMin:8, operators:1,uptime:91,barFeed:true},
-  {id:"NO191",type:"LATHE",mfr:"Doosan",    model:"Puma 300LM",        x:88, y:35,w:9, h:6, cycleMin:15,setupMin:8, operators:1,uptime:93},
-  {id:"NO197",type:"LATHE",mfr:"Doosan",    model:"Puma 400LM",        x:100,y:35,w:9, h:6, cycleMin:15,setupMin:8, operators:1,uptime:92},
-  {id:"NO198",type:"LATHE",mfr:"Okuma",     model:"LU45",              x:113,y:35,w:10,h:6, cycleMin:15,setupMin:8, operators:1,uptime:90},
-  {id:"NO200",type:"LATHE",mfr:"Mori Seiki",model:"ZL-35",             x:88, y:49,w:9, h:6, cycleMin:15,setupMin:8, operators:1,uptime:91},
-  {id:"NO203",type:"LATHE",mfr:"Mori Seiki",model:"CL-153",            x:100,y:49,w:8, h:6, cycleMin:15,setupMin:8, operators:1,uptime:90},
-  {id:"NO210",type:"LATHE",mfr:"Okuma",     model:"LU 3000 EX",        x:113,y:49,w:10,h:6, cycleMin:15,setupMin:8, operators:1,uptime:89},
-  {id:"NO211",type:"LATHE",mfr:"DMG Mori",  model:"NZX 2500|1000",     x:57, y:78,w:11,h:6, cycleMin:15,setupMin:8, operators:1,uptime:90},
-  {id:"NO102",type:"VMC",  mfr:"Fadal",     model:"VMC 4020",          x:10, y:100,w:9,h:7, cycleMin:25,setupMin:10,operators:1,uptime:85},
-  {id:"NO104",type:"VMC",  mfr:"Mori Seiki",model:"MV-55",             x:22, y:100,w:8,h:7, cycleMin:22,setupMin:10,operators:1,uptime:87},
-  {id:"NO301",type:"DRILL",mfr:"DeHoff",    model:"20 Series",         x:118,y:147,w:13,h:6,cycleMin:15,setupMin:5, operators:1,uptime:82},
+  {id:"NO501",type:"5AX", mfr:"DMG-Mori",  model:"DMU 60 eVo Linear", x:10, y:10,cycleMin:45,setupMin:15,operators:1,uptime:90},
+  {id:"NO502",type:"5AX", mfr:"DMG-Mori",  model:"DMU 60 eVo Linear", x:28, y:10,cycleMin:45,setupMin:15,operators:1,uptime:90},
+  {id:"CP640",type:"MTURN",mfr:"Mori Seiki",model:"NT 4250 DCG",       x:46, y:10,cycleMin:40,setupMin:20,operators:1,uptime:88},
+  {id:"CP642",type:"MTURN",mfr:"Mori Seiki",model:"NT 4250 DCG",       x:64, y:10,cycleMin:40,setupMin:20,operators:1,uptime:88},
+  {id:"CP644",type:"MTURN",mfr:"DMG Mori",  model:"NTX 3000",          x:82, y:10,cycleMin:38,setupMin:18,operators:1,uptime:87},
+  {id:"NO119",type:"HMILL",mfr:"Mori Seiki",model:"SH-400",            x:100,y:10,cycleMin:25,setupMin:10,operators:1,uptime:92},
+  {id:"NO120",type:"HMILL",mfr:"Doosan",    model:"NHP 6300",          x:118,y:10,cycleMin:25,setupMin:10,operators:1,uptime:90},
+  {id:"NO121",type:"HMILL",mfr:"DMG Mori",  model:"NHX 4000",          x:136,y:10,cycleMin:28,setupMin:12,operators:1,uptime:89},
+  {id:"CP641",type:"LATHE",mfr:"Doosan",    model:"Puma TT1800SV",     x:10, y:30,cycleMin:15,setupMin:8, operators:1,uptime:91,barFeed:true},
+  {id:"CP643",type:"LATHE",mfr:"Doosan",    model:"Puma TT1800SY",     x:28, y:30,cycleMin:15,setupMin:8, operators:1,uptime:91,barFeed:true},
+  {id:"NO191",type:"LATHE",mfr:"Doosan",    model:"Puma 300LM",        x:46, y:30,cycleMin:15,setupMin:8, operators:1,uptime:93},
+  {id:"NO197",type:"LATHE",mfr:"Doosan",    model:"Puma 400LM",        x:64, y:30,cycleMin:15,setupMin:8, operators:1,uptime:92},
+  {id:"NO198",type:"LATHE",mfr:"Okuma",     model:"LU45",              x:82, y:30,cycleMin:15,setupMin:8, operators:1,uptime:90},
+  {id:"NO200",type:"LATHE",mfr:"Mori Seiki",model:"ZL-35",             x:100,y:30,cycleMin:15,setupMin:8, operators:1,uptime:91},
+  {id:"NO203",type:"LATHE",mfr:"Mori Seiki",model:"CL-153",            x:118,y:30,cycleMin:15,setupMin:8, operators:1,uptime:90},
+  {id:"NO210",type:"LATHE",mfr:"Okuma",     model:"LU 3000 EX",        x:136,y:30,cycleMin:15,setupMin:8, operators:1,uptime:89},
+  {id:"NO211",type:"LATHE",mfr:"DMG Mori",  model:"NZX 2500|1000",     x:10, y:50,cycleMin:15,setupMin:8, operators:1,uptime:90},
+  {id:"NO102",type:"VMC",  mfr:"Fadal",     model:"VMC 4020",          x:28, y:50,cycleMin:25,setupMin:10,operators:1,uptime:85},
+  {id:"NO104",type:"VMC",  mfr:"Mori Seiki",model:"MV-55",             x:46, y:50,cycleMin:22,setupMin:10,operators:1,uptime:87},
+  {id:"NO301",type:"DRILL",mfr:"DeHoff",    model:"20 Series",         x:64, y:50,cycleMin:15,setupMin:5, operators:1,uptime:82},
 ];
 
 const INIT_PART_DB=[{
@@ -91,7 +91,7 @@ function tickSim(sim,machines,partDB,dt){
       mst.completedPieces+=job.qty;
       if(part&&nIdx<part.operations.length){
         const nextMid=part.operations[nIdx].machineId;
-        transit.push({destId:nextMid,eta:T+0.5,fromX:mDef.x+mDef.w/2,fromY:mDef.y+mDef.h/2,
+        transit.push({destId:nextMid,eta:T+0.5,fromX:mDef.x+AW/2,fromY:mDef.y+AH/2,
           job:{...job,routeIdx:nIdx}});
       }else{
         completedWOs.push({woId:job.woId,woNumber:job.woNumber,at:T,qty:job.qty});
@@ -205,8 +205,8 @@ export default function App(){
     if(!drag)return; e.preventDefault();
     const p=svgCoord(e);
     setMachines(prev=>prev.map(m=>m.id===drag.id
-      ?{...m,x:Math.round(Math.max(0,Math.min(PW-m.w,p.x-drag.ox))),
-             y:Math.round(Math.max(0,Math.min(PH-m.h,p.y-drag.oy)))}
+      ?{...m,x:Math.round(Math.max(0,Math.min(PW-AW,p.x-drag.ox))),
+             y:Math.round(Math.max(0,Math.min(PH-AH,p.y-drag.oy)))}
       :m));
   },[drag,svgCoord]);
 
@@ -306,28 +306,6 @@ export default function App(){
                 userSelect:"none"}}
               onMouseMove={onSVGMove} onMouseUp={onSVGUp} onMouseLeave={onSVGUp}>
 
-              {/* 20-ft grid */}
-              {Array.from({length:Math.ceil(PW/20)+1},(_,i)=>i*20).map(v=>(
-                <line key={`gx${v}`} x1={f(v)} y1={0} x2={f(v)} y2={f(PH)}
-                  stroke="var(--color-border-tertiary)" strokeWidth="0.5"/>
-              ))}
-              {Array.from({length:Math.ceil(PH/20)+1},(_,i)=>i*20).map(v=>(
-                <line key={`gy${v}`} x1={0} y1={f(v)} x2={f(PW)} y2={f(v)}
-                  stroke="var(--color-border-tertiary)" strokeWidth="0.5"/>
-              ))}
-
-              {/* Zones */}
-              {ZONES.map(z=>(
-                <g key={z.id}>
-                  <rect x={f(z.x)} y={f(z.y)} width={f(z.w)} height={f(z.h)}
-                    fill={z.c+"11"} stroke={z.c} strokeWidth="1" strokeDasharray="5,3" rx="3"/>
-                  <text x={f(z.x)+4} y={f(z.y)+14} fill={z.c} fontSize="12"
-                    fontWeight="700"
-                    fontFamily="var(--font-mono,monospace)" letterSpacing="0.5"
-                    style={{userSelect:"none",pointerEvents:"none"}}>{z.lbl}</text>
-                </g>
-              ))}
-
               {/* Outer wall */}
               <rect x={f(3)} y={f(1)} width={f(287)} height={f(180)}
                 fill="none" stroke="var(--color-border-primary)" strokeWidth="1.5" rx="3"/>
@@ -338,8 +316,8 @@ export default function App(){
                 const mA=machines.find(m=>m.id===op.machineId);
                 const mB=machines.find(m=>m.id===selWOPart.operations[idx+1].machineId);
                 if(!mA||!mB)return null;
-                const x1=f(mA.x+mA.w/2),y1=f(mA.y+mA.h/2);
-                const x2=f(mB.x+mB.w/2),y2=f(mB.y+mB.h/2);
+                const x1=f(mA.x+AW/2),y1=f(mA.y+AH/2);
+                const x2=f(mB.x+AW/2),y2=f(mB.y+AH/2);
                 return(
                   <g key={idx}>
                     <line x1={x1} y1={y1} x2={x2} y2={y2}
@@ -367,7 +345,7 @@ export default function App(){
                 if(!dest)return null;
                 const prog=Math.max(0,Math.min(1,1-(t.eta-sim.time)/0.5));
                 const x0=f(t.fromX),y0=f(t.fromY);
-                const x1=f(dest.x+dest.w/2),y1=f(dest.y+dest.h/2);
+                const x1=f(dest.x+AW/2),y1=f(dest.y+AH/2);
                 const cx=x0+(x1-x0)*prog, cy=y0+(y1-y0)*prog;
                 return(
                   <g key={i}>
@@ -383,17 +361,6 @@ export default function App(){
                 );
               })}
 
-              {/* Scale bar */}
-              <g>
-                <line x1={f(6)} y1={f(PH)-6} x2={f(86)} y2={f(PH)-6}
-                  stroke="var(--color-text-tertiary)" strokeWidth="1.5"/>
-                <line x1={f(6)}  y1={f(PH)-10} x2={f(6)}  y2={f(PH)-2}
-                  stroke="var(--color-text-tertiary)" strokeWidth="1"/>
-                <line x1={f(86)} y1={f(PH)-10} x2={f(86)} y2={f(PH)-2}
-                  stroke="var(--color-text-tertiary)" strokeWidth="1"/>
-                <text x={f(46)} y={f(PH)-8} fill="var(--color-text-tertiary)"
-                  fontSize="11" fontWeight="700" textAnchor="middle">0 ──── 80 ft</text>
-              </g>
             </svg>
 
             {/* Type legend */}
@@ -441,7 +408,7 @@ export default function App(){
                       onAdd={()=>{
                         const id=`H${Date.now().toString().slice(-4)}`;
                         setMachines(prev=>[...prev,{id,type:"VMC",mfr:"",model:"New Machine",
-                          x:60,y:70,w:9,h:7,cycleMin:20,setupMin:10,operators:1,uptime:90}]);
+                          x:60,y:70,cycleMin:20,setupMin:10,operators:1,uptime:90}]);
                         const ns=clone(simRef.current);
                         ns.ms[id]={queue:[],busy:false,job:null,eta:0,startTime:0,completedPieces:0};
                         simRef.current=ns; setSim({...ns}); setSelMId(id);
@@ -480,7 +447,7 @@ function MachRect({m,selected,simM,simTime,onMouseDown}){
   const q=simM?.queue?.length??0;
   const busy=simM?.busy??false;
   const job=simM?.job;
-  const mx=f(m.x),my=f(m.y),mw=f(m.w),mh=f(m.h);
+  const mx=f(m.x),my=f(m.y),mw=f(AW),mh=f(AH);
   const qC=q>=10?"#dc2626":q>=5?"#d97706":"#64748b";
 
   // Progress fraction
@@ -495,11 +462,6 @@ function MachRect({m,selected,simM,simTime,onMouseDown}){
       {/* Chokepoint glow */}
       {q>=5&&<rect x={mx-5} y={my-5} width={mw+10} height={mh+22}
         fill={q>=10?"#dc262616":"#d9770612"} rx="7"/>}
-
-      {/* Bar feed indicator */}
-      {m.barFeed&&<rect x={mx-5} y={my+1} width={5} height={mh-2}
-        fill="none" stroke={cfg.c} strokeWidth="1" rx="1"
-        strokeDasharray="2,1.5" opacity="0.5"/>}
 
       {/* Machine body */}
       <rect x={mx} y={my} width={mw} height={mh}
@@ -524,14 +486,13 @@ function MachRect({m,selected,simM,simTime,onMouseDown}){
 
       {/* Machine ID */}
       <text x={mx+mw/2} y={my+mh/2-(busy?4:2)}
-        textAnchor="middle" fontSize={Math.max(10, mw*0.38)} fontWeight="700"
+        textAnchor="middle" fontSize="11" fontWeight="700"
         fill={cfg.c} fontFamily="var(--font-mono,monospace)"
         style={{pointerEvents:"none",userSelect:"none"}}>{m.id}</text>
 
       {/* Sub-label: type or active WO */}
-      <text x={mx+mw/2} y={my+mh/2+(busy?8:8)}
-        textAnchor="middle" fontSize={busy?7:7}
-        fontWeight="700"
+      <text x={mx+mw/2} y={my+mh/2+8}
+        textAnchor="middle" fontSize="7" fontWeight="700"
         fill={busy?(job?.color||"var(--color-text-tertiary)"):"var(--color-text-tertiary)"}
         fontFamily="var(--font-mono,monospace)"
         style={{pointerEvents:"none",userSelect:"none"}}>
@@ -562,13 +523,6 @@ function MachRect({m,selected,simM,simTime,onMouseDown}){
       })}
       {q>3&&<text x={mx+mw} y={my+mh+13}
         textAnchor="end" fontSize="8" fontWeight="700" fill={qC}>+{q-3}</text>}
-
-      {/* Completed pieces counter */}
-      {(simM?.completedPieces??0)>0&&<text x={mx+1} y={my-2}
-        fontSize="9" fontWeight="700" fill="#10b981"
-        style={{pointerEvents:"none",userSelect:"none"}}>
-        ✓{simM.completedPieces}
-      </text>}
     </g>
   );
 }
@@ -651,9 +605,7 @@ function MachPanel({m,simM,simTime,onChange,onClose}){
       {[{lbl:"Cycle time (min/part)",k:"cycleMin",min:1},
         {lbl:"Setup time (min)",k:"setupMin",min:0},
         {lbl:"Uptime %",k:"uptime",min:1,max:100},
-        {lbl:"Operators",k:"operators",min:1},
-        {lbl:"X position (ft)",k:"x"},{lbl:"Y position (ft)",k:"y"},
-        {lbl:"Width (ft)",k:"w",min:2},{lbl:"Depth (ft)",k:"h",min:2}].map(fld=>(
+        {lbl:"Operators",k:"operators",min:1}].map(fld=>(
         <div key={fld.k} style={{marginBottom:"4px"}}>
           <div style={{fontSize:"9px",color:"var(--color-text-tertiary)",marginBottom:"2px"}}>{fld.lbl}</div>
           <input type="number" value={m[fld.k]} min={fld.min} max={fld.max}
