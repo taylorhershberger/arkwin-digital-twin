@@ -14,16 +14,7 @@ const TC={
 };
 
 const ZONES=[
-  {id:"detail",lbl:"Detail Part Fabrication",x:5,  y:2,  w:140,h:14, c:"#6366f1"},
   {id:"conv",  lbl:"Conventional Machining", x:5,  y:16, w:140,h:110,c:"#16a34a"},
-  {id:"grind", lbl:"CNC Grinding 1,320 SF",  x:5,  y:127,w:100,h:53, c:"#2563eb"},
-  {id:"spool", lbl:"Spool-N-Sleeve 680 SF",  x:107,y:130,w:50, h:50, c:"#ea580c"},
-  {id:"paint", lbl:"Paint / Chemical",       x:107,y:122,w:50, h:8,  c:"#b91c1c"},
-  {id:"assy",  lbl:"Assembly Dept.",         x:147,y:2,  w:48, h:110,c:"#0d9488"},
-  {id:"test",  lbl:"Test Stands",            x:147,y:114,w:48, h:66, c:"#7c3aed"},
-  {id:"tool",  lbl:"Tool Room",              x:197,y:2,  w:47, h:58, c:"#b45309"},
-  {id:"ship",  lbl:"Shipping / Receiving",   x:197,y:62, w:90, h:118,c:"#475569"},
-  {id:"office",lbl:"Offices",               x:197,y:0,  w:95, h:60, c:"#94a3b8"},
 ];
 
 const INIT_MACHINES=[
@@ -141,6 +132,7 @@ export default function App(){
   const [selWOId,setSelWOId]=useState(null);
   const [fTab,   setFTab]  = useState("machines");
   const [drag,   setDrag]  = useState(null);
+  const [overtime, setOvertime] = useState(0);
 
   const simRef  =useRef(sim);
   const machRef =useRef(machines);
@@ -221,8 +213,9 @@ export default function App(){
   const onSVGUp=useCallback(()=>setDrag(null),[]);
   const updM=(id,k,v)=>setMachines(prev=>prev.map(m=>m.id===id?{...m,[k]:v}:m));
 
+  const dayMinutes = Math.min(24, 16 + overtime) * 60;
   const fmtT=min=>{
-    const d=Math.floor(min/480),h=Math.floor((min%480)/60),m=Math.floor(min%60);
+    const d=Math.floor(min/dayMinutes),h=Math.floor((min%dayMinutes)/60),m=Math.floor(min%60);
     return `Day ${d+1}  ${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}`;
   };
 
@@ -230,7 +223,7 @@ export default function App(){
   const selWOPart=selWO?partDB.find(p=>p.partNumber===selWO.partNumber):null;
 
   const navBtn=(k,lbl)=>({
-    padding:"4px 12px",fontSize:"10px",cursor:"pointer",borderRadius:"5px",
+    padding:"4px 12px",fontSize:"0.9em",fontWeight:"700",cursor:"pointer",borderRadius:"5px",
     background:page===k?"#1e3a8a":"transparent",
     color:page===k?"#93c5fd":"var(--color-text-tertiary)",
     border:"1px solid "+(page===k?"#3b82f6":"transparent"),
@@ -240,17 +233,17 @@ export default function App(){
   return(
     <div style={{display:"flex",flexDirection:"column",height:"880px",
       background:"var(--color-background-primary)",color:"var(--color-text-primary)",
-      fontFamily:"var(--font-mono,monospace)",fontSize:"12px",overflow:"hidden"}}>
+      fontFamily:"var(--font-mono,monospace)",fontSize:"clamp(10px,1.1vw,14px)",fontWeight:"600",overflow:"hidden"}}>
 
       {/* ── HEADER ── */}
       <header style={{display:"flex",alignItems:"center",gap:"8px",flexShrink:0,
         padding:"5px 14px",background:"var(--color-background-secondary)",
         borderBottom:"0.5px solid var(--color-border-tertiary)"}}>
         <div>
-          <div style={{fontSize:"8px",color:"var(--color-text-tertiary)",letterSpacing:"2.5px"}}>
-            ARKWIN INDUSTRIES · BETHPAGE NY · TRANSDIGN
+          <div style={{fontSize:"0.75em",fontWeight:"700",color:"var(--color-text-tertiary)",letterSpacing:"2.5px"}}>
+            ARKWIN INDUSTRIES · BETHPAGE NY · TransDigm
           </div>
-          <div style={{fontSize:"12px",fontWeight:"500",letterSpacing:"0.5px"}}>
+          <div style={{fontSize:"1.1em",fontWeight:"700",letterSpacing:"0.5px"}}>
             Manufacturing Digital Twin
           </div>
         </div>
@@ -261,32 +254,37 @@ export default function App(){
         </div>
         {page==="floor"&&(
           <div style={{marginLeft:"auto",display:"flex",alignItems:"center",gap:"7px",flexWrap:"wrap"}}>
-            <span style={{fontSize:"11px",color:"var(--color-text-secondary)",minWidth:"145px"}}>
+            <span style={{fontSize:"1em",fontWeight:"700",color:"var(--color-text-secondary)",minWidth:"145px"}}>
               ⏱ {fmtT(sim.time)}
             </span>
-            <span style={{fontSize:"9px",color:"#818cf8",minWidth:"70px"}}>
+            <span style={{fontSize:"0.8em",fontWeight:"700",color:"var(--color-text-tertiary)"}}>OT hrs</span>
+            <input type="number" min="0" max="8" value={overtime}
+              onChange={e=>setOvertime(Math.max(0,Math.min(8,+e.target.value||0)))}
+              style={{fontSize:"0.85em",width:"42px",textAlign:"center",fontWeight:"700"}}
+              title="Overtime hours (0–8). Base day = 16 hrs, max 24 hrs."/>
+            <span style={{fontSize:"0.75em",fontWeight:"700",color:"#818cf8",minWidth:"70px"}}>
               ✓ {sim.completedWOs.length} WOs done
             </span>
-            <span style={{fontSize:"9px",color:"var(--color-text-tertiary)"}}>Speed</span>
+            <span style={{fontSize:"0.8em",fontWeight:"700",color:"var(--color-text-tertiary)"}}>Speed</span>
             <select value={speed} onChange={e=>setSpeed(+e.target.value)}
-              style={{fontSize:"10px",width:"58px"}}>
+              style={{fontSize:"0.85em",fontWeight:"700",width:"58px"}}>
               {[1,5,15,30,60,120,300].map(s=><option key={s} value={s}>{s}×</option>)}
             </select>
             <button onClick={()=>setRunning(r=>!r)}
-              style={{padding:"4px 13px",fontSize:"11px",cursor:"pointer",
+              style={{padding:"4px 13px",fontSize:"0.9em",fontWeight:"700",cursor:"pointer",
                 background:running?"#fef2f2":"#f0fdf4",
                 color:running?"#dc2626":"#15803d",
                 border:`1px solid ${running?"#fca5a5":"#86efac"}`,borderRadius:"6px"}}>
               {running?"⏸ Pause":"▶ Play"}
             </button>
             <button onClick={resetSim}
-              style={{padding:"4px 8px",fontSize:"10px",cursor:"pointer",borderRadius:"6px",
+              style={{padding:"4px 8px",fontSize:"0.85em",fontWeight:"700",cursor:"pointer",borderRadius:"6px",
                 border:"1px solid var(--color-border-secondary)"}}>
               ↺ Reset
             </button>
             <input type="range" min="0.5" max="2.5" step="0.1" value={zoom}
               onChange={e=>setZoom(+e.target.value)} style={{width:"50px"}}/>
-            <span style={{fontSize:"8px",color:"var(--color-text-tertiary)",minWidth:"26px"}}>
+            <span style={{fontSize:"0.8em",fontWeight:"700",color:"var(--color-text-tertiary)",minWidth:"26px"}}>
               {Math.round(zoom*100)}%
             </span>
           </div>
@@ -323,7 +321,8 @@ export default function App(){
                 <g key={z.id}>
                   <rect x={f(z.x)} y={f(z.y)} width={f(z.w)} height={f(z.h)}
                     fill={z.c+"11"} stroke={z.c} strokeWidth="1" strokeDasharray="5,3" rx="3"/>
-                  <text x={f(z.x)+4} y={f(z.y)+10} fill={z.c} fontSize="8"
+                  <text x={f(z.x)+4} y={f(z.y)+14} fill={z.c} fontSize="12"
+                    fontWeight="700"
                     fontFamily="var(--font-mono,monospace)" letterSpacing="0.5"
                     style={{userSelect:"none",pointerEvents:"none"}}>{z.lbl}</text>
                 </g>
@@ -349,7 +348,7 @@ export default function App(){
                     <circle cx={(x1+x2)/2} cy={(y1+y2)/2} r="5.5"
                       fill={selWOPart.color} opacity="0.85"/>
                     <text x={(x1+x2)/2} y={(y1+y2)/2+3.5}
-                      textAnchor="middle" fontSize="6" fill="white"
+                      textAnchor="middle" fontSize="8" fontWeight="700" fill="white"
                       style={{pointerEvents:"none",userSelect:"none"}}>{idx+1}</text>
                   </g>
                 );
@@ -375,7 +374,7 @@ export default function App(){
                     <rect x={cx-9} y={cy-6} width="18" height="12" rx="3"
                       fill={t.job?.color||"#888"}
                       stroke="var(--color-background-primary)" strokeWidth="0.8" opacity="0.92"/>
-                    <text x={cx} y={cy+3} textAnchor="middle" fontSize="5.5" fill="white"
+                    <text x={cx} y={cy+3} textAnchor="middle" fontSize="7" fontWeight="700" fill="white"
                       fontFamily="var(--font-mono,monospace)"
                       style={{pointerEvents:"none",userSelect:"none"}}>
                       {t.job?.woNumber}
@@ -393,21 +392,21 @@ export default function App(){
                 <line x1={f(86)} y1={f(PH)-10} x2={f(86)} y2={f(PH)-2}
                   stroke="var(--color-text-tertiary)" strokeWidth="1"/>
                 <text x={f(46)} y={f(PH)-8} fill="var(--color-text-tertiary)"
-                  fontSize="8" textAnchor="middle">0 ──── 80 ft</text>
+                  fontSize="11" fontWeight="700" textAnchor="middle">0 ──── 80 ft</text>
               </g>
             </svg>
 
             {/* Type legend */}
             <div style={{display:"flex",flexWrap:"wrap",gap:"8px",marginTop:"5px",
-              fontSize:"9px",color:"var(--color-text-tertiary)"}}>
+              fontSize:"0.85em",fontWeight:"700",color:"var(--color-text-tertiary)"}}>
               {Object.entries(TC).map(([k,v])=>(
                 <span key={k} style={{display:"flex",alignItems:"center",gap:"3px"}}>
-                  <span style={{width:"8px",height:"8px",borderRadius:"2px",
+                  <span style={{width:"10px",height:"10px",borderRadius:"2px",
                     background:v.bg,border:`1.5px solid ${v.c}`,display:"inline-block"}}/>
                   {v.lbl}
                 </span>
               ))}
-              <span style={{marginLeft:"auto",display:"flex",gap:"10px",fontSize:"8.5px"}}>
+              <span style={{marginLeft:"auto",display:"flex",gap:"10px",fontSize:"0.9em"}}>
                 <span style={{color:"#d97706"}}>■ Q≥5 amber</span>
                 <span style={{color:"#dc2626"}}>■ Q≥10 red choke</span>
               </span>
@@ -422,7 +421,7 @@ export default function App(){
               borderBottom:"0.5px solid var(--color-border-tertiary)"}}>
               {[["machines","Machines"],["wos","Active WOs"],["analytics","Analytics"]].map(([k,lbl])=>(
                 <button key={k} onClick={()=>setFTab(k)}
-                  style={{flex:1,padding:"7px 0",fontSize:"9px",cursor:"pointer",
+                  style={{flex:1,padding:"7px 0",fontSize:"0.85em",cursor:"pointer",fontWeight:"700",
                     background:fTab===k?"var(--color-background-secondary)":"transparent",
                     color:fTab===k?"var(--color-text-primary)":"var(--color-text-tertiary)",
                     border:"none",fontFamily:"var(--font-mono,monospace)",
@@ -525,13 +524,14 @@ function MachRect({m,selected,simM,simTime,onMouseDown}){
 
       {/* Machine ID */}
       <text x={mx+mw/2} y={my+mh/2-(busy?4:2)}
-        textAnchor="middle" fontSize="8" fontWeight="600"
+        textAnchor="middle" fontSize={Math.max(10, mw*0.38)} fontWeight="700"
         fill={cfg.c} fontFamily="var(--font-mono,monospace)"
         style={{pointerEvents:"none",userSelect:"none"}}>{m.id}</text>
 
       {/* Sub-label: type or active WO */}
-      <text x={mx+mw/2} y={my+mh/2+(busy?6:6)}
-        textAnchor="middle" fontSize={busy?5:5.5}
+      <text x={mx+mw/2} y={my+mh/2+(busy?8:8)}
+        textAnchor="middle" fontSize={busy?7:7}
+        fontWeight="700"
         fill={busy?(job?.color||"var(--color-text-tertiary)"):"var(--color-text-tertiary)"}
         fontFamily="var(--font-mono,monospace)"
         style={{pointerEvents:"none",userSelect:"none"}}>
@@ -552,7 +552,7 @@ function MachRect({m,selected,simM,simTime,onMouseDown}){
               width={bw} height={7} rx="1.5"
               fill={j.color||"#888"} opacity="0.78"/>
             <text x={mx+i*(bw+0.8)+bw/2} y={my+mh+10.5}
-              textAnchor="middle" fontSize="4.5" fill="white"
+              textAnchor="middle" fontSize="6.5" fontWeight="700" fill="white"
               fontFamily="var(--font-mono,monospace)"
               style={{pointerEvents:"none",userSelect:"none"}}>
               {j.woNumber}
@@ -561,11 +561,11 @@ function MachRect({m,selected,simM,simTime,onMouseDown}){
         );
       })}
       {q>3&&<text x={mx+mw} y={my+mh+13}
-        textAnchor="end" fontSize="6" fill={qC}>+{q-3}</text>}
+        textAnchor="end" fontSize="8" fontWeight="700" fill={qC}>+{q-3}</text>}
 
       {/* Completed pieces counter */}
       {(simM?.completedPieces??0)>0&&<text x={mx+1} y={my-2}
-        fontSize="6.5" fill="#10b981"
+        fontSize="9" fontWeight="700" fill="#10b981"
         style={{pointerEvents:"none",userSelect:"none"}}>
         ✓{simM.completedPieces}
       </text>}
